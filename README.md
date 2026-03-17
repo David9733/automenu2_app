@@ -193,23 +193,6 @@ final shuffled = List<FoodItem>.from(allCandidates)..shuffle(random);
 
 ---
 
-## AI 활용 개발 방식 (Vibe Coding)
-
-이 프로젝트는 AI 코딩 도구를 활용한 개발 workflow를 설계하고 반복적으로 개선하는 방식으로 진행했습니다.
-
-**사용 도구**: Cursor · Claude CLI
-
-**개발 workflow**:
-
-1. 구현할 기능의 요구사항과 기술 방향을 먼저 정의
-2. Cursor / Claude CLI에 프롬프트 입력하여 초기 코드 생성
-3. 생성된 코드를 실행하여 기능 동작 여부 확인
-4. 오류 발생 시 문제 상황을 설명하고 수정 요청
-5. 정상 작동할 때까지 반복 수정
-6. 동작 확인 후 코드 구조 개선 또는 성능 개선 요청
-7. 최종 동작 확인 후 배포
-
----
 
 ## 트러블슈팅 / 개선 경험
 
