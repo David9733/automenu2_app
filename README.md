@@ -375,6 +375,15 @@ lib/
 
 ---
 
-## License
+## 🌱 향후 개선 계획
 
-Private
+-
+
+---
+
+## 📎 참고자료
+
+<details>
+<summary>ERD 보기</summary>
+
+</details>
