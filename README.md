@@ -10,11 +10,11 @@
 
 | 항목 | 내용 |
 |---|---|
-| 기간 | (입력 필요) |
-| 유형 | 개인 프로젝트 |
-| 플랫폼 | Android / iOS (Flutter 크로스플랫폼) |
-| 핵심 기술 | Flutter · Dart · Supabase · Firebase |
-| 배포 | [(입력 필요) Google Play Store 링크]() |
+|  **개발 기간**  | 2025.01 ~ 2025.02 |
+| **프로젝트 유형** | 개인 프로젝트 |
+| **플랫폼** | Android / iOS (Flutter 크로스플랫폼) |
+| **핵심 기술** | Flutter · Dart · Supabase · Firebase |
+| **앱 다운로드** | [Google Play Store](https://play.google.com/store/apps/details?id=com.automenu2&hl=ko) |
 
 ---
 
