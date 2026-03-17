@@ -222,54 +222,22 @@ MainScreen
 
 ### 3. Firebase Analytics 이벤트 추적 (AnalyticsService)
 
-사용자의 선택 흐름과 이탈 시점을 추적하기 위해 커스텀 이벤트를 설계하고 구현했습니다.
+사용자의 선택 흐름과 이탈 시점을 파악하기 위해 단계별 커스텀 이벤트를 설계하고 구현했습니다.
 
-| 이벤트 | 추적 내용 |
-|---|---|
-| `meal_time_selected` | 식사 시간 선택 |
-| `eating_situation_selected` | 상황 선택 (혼자/동료/연인/가족) |
-| `drinking_status_selected` | 음주 여부 선택 |
-| `food_category_selected` | 카테고리 선택 (선택 개수, 전체 선택 여부) |
-| `recommendation_requested` | 추천 요청 (조건 전체 포함) |
-| `recommendation_viewed` | 추천 결과 조회 (추천 개수, 첫 번째 음식명) |
-| `food_selected` | 최종 음식 선택 (선택 인덱스, 총 옵션 수) |
-| `view_another_option` | 다른 옵션 보기 (현재 인덱스, 전체 개수) |
-| `recommendation_refreshed` | 다시 추천받기 (이전 음식명, 조회한 옵션 수) |
-| `returned_to_start` | 추천 흐름 처음으로 돌아가기 |
-| `recommendation_failed` | 추천 실패 (에러 타입, 조건 포함) |
-| `notification_setting_changed` | 알림 ON/OFF 변경 (식사 유형, 설정 시간) |
-| `meal_time_setting_changed` | 알림 시간 변경 (이전/이후 시간) |
-| `screen_view` | 화면 전환 추적 |
+- 조건 선택 단계: 식사 시간 선택, 상황 선택(혼자/동료/연인/가족), 음주 여부 선택, 카테고리 선택(선택 개수·전체 선택 여부)
+- 추천 결과 단계: 추천 요청(조건 전체 포함), 추천 결과 조회(추천 개수·첫 번째 음식명), 최종 음식 선택(선택 인덱스·총 옵션 수), 다른 옵션 보기, 다시 추천받기(이전 음식명·조회한 옵션 수), 처음으로 돌아가기, 추천 실패(에러 타입·조건 포함)
+- 설정 단계: 알림 ON/OFF 변경(식사 유형·설정 시간), 알림 시간 변경(이전/이후 시간)
+- 공통: 화면 전환(`screen_view`) 추적
 
 ### 4. 네이티브 앱 수준의 UX 구현
 
-Flutter 크로스플랫폼 앱에서도 네이티브 앱과 동일한 반응성과 자연스러움을 목표로 아래 요소들을 직접 설계하고 구현했습니다.
+Flutter 크로스플랫폼 앱에서도 네이티브 앱과 동일한 반응성과 자연스러움을 목표로 직접 설계하고 구현했습니다.
 
-**화면 전환 애니메이션**
-- `PageRouteBuilder`로 모든 화면 전환을 커스텀 제어
-- `FadeTransition` + `SlideTransition`(easeOutCubic) 조합으로 350~400ms 부드러운 전환 구현
-- 기본 MaterialPageRoute의 딱딱한 전환 대신 콘텐츠 흐름에 맞는 방향(좌→우, 하→상)으로 슬라이드
-
-**터치 피드백 (InteractiveButton)**
-- `GestureDetector` + `ScaleTransition` + `HapticFeedback` 조합의 `InteractiveButton` 커스텀 위젯 구현
-- 버튼 누름 시 0.95 축소 스케일 애니메이션 + `lightImpact` 햅틱, 옵션 선택·페이지 전환 시 `selectionClick`, 스와이프 제스처 시 `mediumImpact` 구분 적용
-
-**스크롤 물리 및 제스처**
-- `BouncingScrollPhysics`를 전체 스크롤 영역에 적용하여 iOS/Android 모두 동일한 바운스 스크롤 경험 제공
-- 추천 결과 화면에서 아래로 빠르게 스와이프(velocity > 500)하면 다시 추천받기 제스처로 동작
-
-**진입·상태 변화 애니메이션**
-- `TweenAnimationBuilder`로 화면 진입 시 버튼들이 opacity 0→1 + scale 0.8→1.0 으로 순차 등장 (index × 50ms 딜레이)
-- `AnimatedContainer`(200ms, easeInOut)로 선택 항목의 색상·테두리가 즉시 전환
-- 추천 결과 페이지 인디케이터 도트가 `AnimatedContainer`로 너비 8→24px 애니메이션
-
-**스켈레톤 로딩 UI**
-- `SkeletonLoader` 위젯: shimmer 그라디언트(LinearGradient)가 좌→우로 반복 이동하는 1500ms 루프 애니메이션
-- 데이터 로딩 중 `RecommendationCardSkeleton`으로 카드 레이아웃 형태를 미리 표시하여 레이아웃 점프 방지
-
-**OS 고유 인터랙션**
-- 안드로이드 뒤로 가기: `Navigator.canPop()` + `mounted` 체크로 안전한 뒤로 가기 처리
-- iOS 스타일 뒤로 가기 아이콘(`arrow_back_ios_new`) 사용으로 플랫폼 일관성 유지
+- 화면 전환: `PageRouteBuilder` + `FadeTransition` + `SlideTransition`(easeOutCubic) 조합으로 350~400ms 부드러운 전환, 콘텐츠 흐름에 맞는 방향(좌→우, 하→상)으로 슬라이드
+- 터치 피드백: `GestureDetector` + `ScaleTransition` + `HapticFeedback` 조합의 `InteractiveButton` 구현, 상황별 햅틱(`lightImpact` / `selectionClick` / `mediumImpact`) 구분 적용
+- 제스처: `BouncingScrollPhysics`로 iOS/Android 통일된 바운스 스크롤, 빠른 하단 스와이프(velocity > 500)로 다시 추천받기 동작
+- 애니메이션: `TweenAnimationBuilder`로 화면 진입 시 버튼 순차 등장, `AnimatedContainer`로 선택 항목 색상·인디케이터 도트 크기 즉시 전환
+- 스켈레톤 로딩: shimmer 그라디언트 루프 애니메이션으로 로딩 중 레이아웃 점프 방지
 
 ### 5. 조건 기반 음식 추천 필터링 (FoodService)
 
