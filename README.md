@@ -134,8 +134,6 @@ Flutter로 "이따가 뭐 먹지" 음식 추천 앱을 처음부터 완성해줘
 
 ---
 
-
-
 ## 화면 흐름
 MainScreen
   └── Tab 0: MealTimeScreen (아침 / 점심 / 저녁 선택)
