@@ -198,8 +198,6 @@ MainScreen
 
 ---
 
-
----
 ```
 
 </details>
