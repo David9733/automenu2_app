@@ -1,4 +1,6 @@
-# 이따가 뭐 먹지 (What Should I Eat Later?)
+<img width="512" height="512" alt="Image" src="https://github.com/user-attachments/assets/4375cbcb-0fca-4f3e-a170-153bf9edc263" />
+
+# 이따가 뭐 먹지? 어플
 
 > 식사 시간, 상황, 음주 여부를 선택하면 조건에 맞는 음식을 추천해주는 Flutter 모바일 앱
 
