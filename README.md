@@ -1,4 +1,5 @@
 <img width="512" height="512" alt="Image" src="https://github.com/user-attachments/assets/4375cbcb-0fca-4f3e-a170-153bf9edc263" />
+![Image](https://github.com/user-attachments/assets/4a7a1cdb-cd01-4812-99bb-29037447bb2e)
 
 # 이따가 뭐 먹지? 어플
 
