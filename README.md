@@ -268,7 +268,7 @@ return templates[foodHash % templates.length];
 다양한 모바일 기기 환경에서 UI가 깨지지 않도록
 화면 방향(세로/가로)과 화면 크기에 따라 레이아웃과 UI 요소를 분기 처리
 
-- 화면 높이를 기준으로 verySmall / small / normal 3단계로 구분(height < 500 → verySmall, height < 600 → small, 그 외 → normal)
+- 화면 높이를 기준으로 height < 500 → verySmall, height < 600 → small, 그 외 → normal 3단계로 구분
 - 각 단계별로 폰트 크기, 여백, 버튼 높이를 별도 설정하여 화면 크기에 맞게 UI 조정
 - verySmall 값이 없는 경우 small 기준의 0.9배를 적용하는 폴백 로직 구현
 
