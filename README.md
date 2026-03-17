@@ -192,7 +192,7 @@ MainScreen
 - 가로 모드: Row 배치, 세로 모드: Column 배치
 
 ### MainScreen
-- BottomNavigationBar (추천받기🍽️/ 설정⚙️
+- BottomNavigationBar (추천받기🍽️ / 설정⚙️)
 - 하단: BannerAdWidget 고정 (광고 위에 BottomNav)
 - 탭 전환 시 HapticFeedback
 
