@@ -1,4 +1,4 @@
-![Image](https://github.com/user-attachments/assets/4a7a1cdb-cd01-4812-99bb-29037447bb2e)
+![Image](https://github.com/user-attachments/assets/baa7b358-8eae-4590-b96b-8c8dc758792b)
 
 # 이따가 뭐 먹지? 어플
 
