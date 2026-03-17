@@ -263,13 +263,20 @@ return templates[foodHash % templates.length];
 - `runZonedGuarded`로 모든 비동기 영역의 미처리 예외를 Crashlytics에 자동 보고
 - 각 초기화 단계 소요 시간을 ms 단위로 로깅하여 병목 구간 파악
 
-### 5. 반응형 레이아웃 (ResponsiveHelper)
+### 5. 반응형 레이아웃 설계 (ResponsiveHelper)
 
-화면 방향(세로/가로)과 화면 크기에 따라 폰트 크기, 간격, 버튼 높이, 레이아웃 구조를 분기 처리했습니다.
+다양한 모바일 기기 환경에서 UI가 깨지지 않도록
+화면 방향(세로/가로)과 화면 크기에 따라 레이아웃과 UI 요소를 분기 처리했습니다.
 
-- `height < 500` → verySmall / `height < 600` → small / 그 외 → normal 3단계 기준으로 분기
-- 각 단계별로 폰트 크기·여백·버튼 높이에 별도 수치 적용
-- verySmall 미지정 시 small 값의 0.9배로 자동 산출하는 폴백 처리
+- 화면 높이를 기준으로 verySmall / small / normal 3단계로 구분
+  - height < 500 → verySmall
+  - height < 600 → small
+  - 그 외 → normal
+- 각 단계별로 폰트 크기, 여백, 버튼 높이를 별도 설정하여 화면 크기에 맞게 UI 조정
+- verySmall 값이 없는 경우 small 기준의 0.9배를 적용하는 폴백 로직 구현
+
+이를 통해 작은 화면에서도 요소가 과도하게 줄어들거나 깨지는 문제를 방지하고,
+가로/세로 모드 전환 시에도 일관된 사용자 경험을 제공했습니다.
 
 ### 🎬 시연 영상
 
