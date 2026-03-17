@@ -138,16 +138,14 @@ Flutter로 "이따가 뭐 먹지" 음식 추천 앱을 처음부터 완성해줘
 
 ## 화면 흐름
 MainScreen
-  └── Tab 0: MealTimeScreen (아침🌅 / 점심☀️ / 저녁🌙 선택)
-        └── SituationScreen (혼자🍽️/ 직장동료👥 / 애인❤️ / 가족👨‍👩‍👧
+  └── Tab 0: MealTimeScreen (아침 / 점심 / 저녁 선택)
+        └── SituationScreen (혼자 / 직장동료 / 애인 / 가족)
               └── DrinkingScreen (음주 여부 선택)
                     └── CategoryScreen (한식/일식/양식/중식/분식 다중 선택, 선택 안 해도 다음 가능)
                           └── RecommendationScreen (음식 3개 PageView 좌우 스와이프)
   └── Tab 1: SettingsScreen (식사 시간 설정 + 알림 ON/OFF)
 
 ---
-
-
 
 ## UI 상세
 
@@ -161,11 +159,11 @@ MainScreen
 - 상단 AppBar: 다크/라이트 모드 토글 IconButton 포함
 
 ### MealTimeScreen
-- 아침(🌅, 연한 주황 그라데이션), 점심(☀️, 연한 노랑), 저녁(🌙, 연한 파랑) 버튼
+- 아침(연한 주황 그라데이션), 점심(연한 노랑), 저녁(연한 파랑) 버튼
 - 가로 모드: Row 배치, 세로 모드: Column 배치
 
 ### SituationScreen
-- 혼자(🍽, 연녹), 직장동료(👥, 연파랑), 애인(❤️, 연분홍), 가족(👨‍👩‍👧‍👦, 연노랑)
+- 혼자(연녹), 직장동료(연파랑), 애인(연분홍), 가족(연보라)
 - 선택 시 오렌지 테두리 + 체크 아이콘 + 오렌지 그림자
 - 미선택 시 회색 배경
 - 하단 "다음" 버튼: 선택 전 비활성(회색, opacity 0.6), 선택 후 오렌지
@@ -192,8 +190,8 @@ MainScreen
 - 가로 모드: Row 배치, 세로 모드: Column 배치
 
 ### MainScreen
-- BottomNavigationBar (추천받기🍽️ / 설정⚙️)
-- 하단: BannerAdWidget 고정 (광고 위에 BottomNav)
+- BottomNavigationBar (추천받기 / 설정)
+- BottomNavigationBar 아래에 BannerAdWidget 고정 (화면 최하단)
 - 탭 전환 시 HapticFeedback
 
 ---
