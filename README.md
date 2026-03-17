@@ -254,9 +254,13 @@ final shuffled = List<FoodItem>.from(allCandidates)..shuffle(random);
 
 ### 🎬 시연 영상
 
-![Image](https://github.com/user-attachments/assets/21bb5885-d225-4ab9-8541-32258cfd1bc7)
+**APP 기능**
 
 ![Image](https://github.com/user-attachments/assets/00ecc95a-92c2-439a-a800-1b10f3d5d423)
+
+**APP 알림**
+
+![Image](https://github.com/user-attachments/assets/21bb5885-d225-4ab9-8541-32258cfd1bc7)
 
 ---
 
