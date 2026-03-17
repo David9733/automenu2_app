@@ -256,11 +256,11 @@ final shuffled = List<FoodItem>.from(allCandidates)..shuffle(random);
 
 **APP 기능**
 
-![Image](https://github.com/user-attachments/assets/00ecc95a-92c2-439a-a800-1b10f3d5d423)
+<img src="https://github.com/user-attachments/assets/00ecc95a-92c2-439a-a800-1b10f3d5d423" width="320">
 
 **APP 알림**
 
-![Image](https://github.com/user-attachments/assets/21bb5885-d225-4ab9-8541-32258cfd1bc7)
+<img src="https://github.com/user-attachments/assets/21bb5885-d225-4ab9-8541-32258cfd1bc7" width="320">
 
 ---
 
