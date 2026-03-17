@@ -198,18 +198,8 @@ MainScreen
 
 ---
 
-## 초기화 전략 (main.dart)
-- 앱 시작 즉시 runApp() 실행
-- SharedPreferences 백그라운드 사전 로딩
-- Firebase: 백그라운드 초기화 (앱 시작 블로킹 방지)
-- Supabase: Firebase 완료 후 초기화
-- NotificationService: 즉시 초기화
-- MobileAds: 지연 초기화 (앱 시작 성능 최우선)
-- runZonedGuarded로 전역 에러 핸들링
-- Crashlytics에 에러 보고
 
-
- ---
+---
 ```
 
 </details>
