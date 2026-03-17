@@ -1,6 +1,6 @@
 ![Image](https://github.com/user-attachments/assets/baa7b358-8eae-4590-b96b-8c8dc758792b)
 
-# 이따가 뭐 먹지? 어플
+# 이따가 뭐 먹지? 앱
 
 > 식사 시간, 상황, 음주 여부를 선택하면 조건에 맞는 음식을 추천해주는 Flutter 모바일 앱
 
