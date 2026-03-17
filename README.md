@@ -154,15 +154,14 @@ MainScreen
 ### 공통 디자인 원칙
 - 배경: LinearGradient (라이트: white → orange.shade50, 다크: #1A1A1A → #2D2D2D)
 - 버튼: BorderRadius 20~24, BoxShadow, 그라데이션 배경
-- 화면 전환: FadeTransition + SlideTransition (오른쪽에서 왼쪽, 350ms)
-- 햅틱 피드백: HapticFeedback.selectionClick() / mediumImpact()
-- TweenAnimationBuilder로 버튼 fade-in + scale-up 등장 애니메이션
+- 화면 전환: FadeTransition + SlideTransition (오른쪽에서 왼쪽)
+- 햅틱 피드백 적용
+- 버튼 fade-in + scale-up 등장 애니메이션
 - 반응형: 세로/가로 모드, 작은 화면 대응 (ResponsiveHelper)
 - 상단 AppBar: 다크/라이트 모드 토글 IconButton 포함
 
 ### MealTimeScreen
 - 아침(🌅, 연한 주황 그라데이션), 점심(☀️, 연한 노랑), 저녁(🌙, 연한 파랑) 버튼
-- 버튼 높이: 90px (세로), 60px (가로)
 - 가로 모드: Row 배치, 세로 모드: Column 배치
 
 ### SituationScreen
@@ -200,24 +199,14 @@ MainScreen
 ---
 
 ## 초기화 전략 (main.dart)
-- WidgetsFlutterBinding.ensureInitialized() 후 즉시 runApp()
-- SharedPreferences 사전 로딩 (백그라운드)
-- Firebase: 3초 지연 후 백그라운드 초기화
+- 앱 시작 즉시 runApp() 실행
+- SharedPreferences 백그라운드 사전 로딩
+- Firebase: 백그라운드 초기화 (앱 시작 블로킹 방지)
 - Supabase: Firebase 완료 후 초기화
 - NotificationService: 즉시 초기화
-- MobileAds: 13초 지연 후 초기화 (앱 시작 성능 최우선)
+- MobileAds: 지연 초기화 (앱 시작 성능 최우선)
 - runZonedGuarded로 전역 에러 핸들링
 - Crashlytics에 에러 보고
-
----
-
-## 기타 구현 사항
-- AppLogger: kDebugMode에서만 출력하는 디버그 로거
-- InteractiveButton: 누를 때 scale 0.95로 줄어드는 애니메이션 래퍼
-- SkeletonLoader: shimmer 없이 간단한 회색 박스 로딩 UI
-- BannerAdWidget: AdMob 배너, 로드 실패 시 빈 공간 처리
-- Analytics 이벤트: 식사 시간 선택, 상황 선택, 음주 여부, 카테고리, 추천 결과 조회, 알림 설정 변경
-- 앱 아이콘: 주황색(#FF8C42) 배경의 adaptive icon
 
 
  ---
