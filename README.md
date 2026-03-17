@@ -200,7 +200,7 @@ MainScreen
 
 ---
 
-## 핵심 구현 내용
+## 🔑 핵심 구현 내용
 
 ### 1. LRU 캐시 적용 (FoodService)
 
@@ -267,7 +267,7 @@ final shuffled = List<FoodItem>.from(allCandidates)..shuffle(random);
 
 ---
 
-## 기술 스택 및 선택 이유
+## 🛠️ 기술 스택 및 선택 이유
 
 | 기술 | 선택 이유 |
 |---|---|
@@ -285,7 +285,7 @@ final shuffled = List<FoodItem>.from(allCandidates)..shuffle(random);
 
 
 
-## 트러블슈팅 / 개선 경험
+## 🔧 트러블슈팅 / 개선 경험
 
 ### 1. 앱 시작 시간 지연 문제
 
@@ -338,7 +338,7 @@ final shuffled = List<FoodItem>.from(allCandidates)..shuffle(random);
 
 ---
 
-## 실행 방법
+## 🚀 실행 방법
 
 ### 사전 요구사항
 
