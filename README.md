@@ -12,7 +12,7 @@
 |---|---|
 |  **개발 기간**  | 2025.01 ~ 2025.02 |
 | **프로젝트 유형** | 개인 프로젝트 |
-| **핵심 기술** | Flutter · Dart · Supabase · Firebase |
+| **핵심 기술** | Flutter, Dart, Supabase, Firebase |
 | **앱 다운로드** | [Google Play Store](https://play.google.com/store/apps/details?id=com.automenu2&hl=ko) |
 
 ---
