@@ -241,6 +241,36 @@ MainScreen
 | `meal_time_setting_changed` | 알림 시간 변경 (이전/이후 시간) |
 | `screen_view` | 화면 전환 추적 |
 
+### 4. 네이티브 앱 수준의 UX 구현
+
+Flutter 크로스플랫폼 앱에서도 네이티브 앱과 동일한 반응성과 자연스러움을 목표로 아래 요소들을 직접 설계하고 구현했습니다.
+
+**화면 전환 애니메이션**
+- `PageRouteBuilder`로 모든 화면 전환을 커스텀 제어
+- `FadeTransition` + `SlideTransition`(easeOutCubic) 조합으로 350~400ms 부드러운 전환 구현
+- 기본 MaterialPageRoute의 딱딱한 전환 대신 콘텐츠 흐름에 맞는 방향(좌→우, 하→상)으로 슬라이드
+
+**터치 피드백 (InteractiveButton)**
+- `GestureDetector` + `ScaleTransition` + `HapticFeedback` 조합의 `InteractiveButton` 커스텀 위젯 구현
+- 버튼 누름 시 0.95 축소 스케일 애니메이션 + `lightImpact` 햅틱, 옵션 선택·페이지 전환 시 `selectionClick`, 스와이프 제스처 시 `mediumImpact` 구분 적용
+
+**스크롤 물리 및 제스처**
+- `BouncingScrollPhysics`를 전체 스크롤 영역에 적용하여 iOS/Android 모두 동일한 바운스 스크롤 경험 제공
+- 추천 결과 화면에서 아래로 빠르게 스와이프(velocity > 500)하면 다시 추천받기 제스처로 동작
+
+**진입·상태 변화 애니메이션**
+- `TweenAnimationBuilder`로 화면 진입 시 버튼들이 opacity 0→1 + scale 0.8→1.0 으로 순차 등장 (index × 50ms 딜레이)
+- `AnimatedContainer`(200ms, easeInOut)로 선택 항목의 색상·테두리가 즉시 전환
+- 추천 결과 페이지 인디케이터 도트가 `AnimatedContainer`로 너비 8→24px 애니메이션
+
+**스켈레톤 로딩 UI**
+- `SkeletonLoader` 위젯: shimmer 그라디언트(LinearGradient)가 좌→우로 반복 이동하는 1500ms 루프 애니메이션
+- 데이터 로딩 중 `RecommendationCardSkeleton`으로 카드 레이아웃 형태를 미리 표시하여 레이아웃 점프 방지
+
+**OS 고유 인터랙션**
+- 안드로이드 뒤로 가기: `Navigator.canPop()` + `mounted` 체크로 안전한 뒤로 가기 처리
+- iOS 스타일 뒤로 가기 아이콘(`arrow_back_ios_new`) 사용으로 플랫폼 일관성 유지
+
 ### 🎬 시연 영상
 
 <table>
