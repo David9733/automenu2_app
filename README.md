@@ -220,16 +220,7 @@ MainScreen
 - 각 단계별로 폰트 크기, 여백, 버튼 높이를 별도 설정하여 화면 크기에 맞게 UI 조정
 - verySmall 값이 없는 경우 small 기준의 0.9배를 적용하는 폴백 로직 구현
 
-### 3. 앱 초기화 구조 설계
-
-서비스 우선순위에 따라 초기화 순서를 분리하여 앱 시작 속도를 확보했습니다.
-
-- Firebase Crashlytics, Supabase: 앱 실행 전 순차 초기화 (필수)
-- Google Mobile Ads, 알림 서비스: `runApp()` 이후 비동기 초기화 (앱 시작 블로킹 방지)
-- `runZonedGuarded`로 모든 비동기 영역의 미처리 예외를 Crashlytics에 자동 보고
-- 각 초기화 단계 소요 시간을 ms 단위로 로깅하여 병목 구간 파악
-
-### 4. Firebase Analytics 이벤트 추적 (AnalyticsService)
+### 3. Firebase Analytics 이벤트 추적 (AnalyticsService)
 
 사용자의 선택 흐름과 이탈 시점을 추적하기 위해 커스텀 이벤트를 설계하고 구현했습니다.
 
@@ -289,7 +280,7 @@ MainScreen
 
 **문제**: Google Mobile Ads 초기화를 `runApp()` 이전에 동기로 실행하자 앱 첫 화면 표시가 지연되었습니다.
 
-**개선**: 광고 초기화와 알림 서비스 초기화를 `runApp()` 이후 `.then()` 체인으로 분리하여 비동기 실행으로 전환했습니다. Firebase Crashlytics · Supabase만 필수 선행 초기화 대상으로 유지했습니다.
+**개선**: 광고 초기화와 알림 서비스 초기화를 `runApp()` 이후 `.then()` 체인으로 분리하여 비동기 실행으로 전환했습니다. Firebase Crashlytics · Supabase만 필수 선행 초기화 대상으로 유지했습니다. `runZonedGuarded`로 모든 비동기 영역의 미처리 예외를 Crashlytics에 자동 보고하도록 감쌌으며, 각 초기화 단계 소요 시간을 ms 단위로 로깅하여 병목 구간을 파악할 수 있도록 했습니다.
 
 ### 2. 동일 조건 반복 요청 시 불필요한 DB 호출
 
