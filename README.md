@@ -137,22 +137,22 @@ Flutter로 "이따가 뭐 먹지" 음식 추천 앱을 처음부터 완성해줘
 ## pubspec.yaml 패키지
 dependencies:
   flutter_localizations (sdk: flutter)
-  supabase_flutter: ^2.5.6
-  provider: ^6.1.1
-  firebase_core: ^3.0.0
-  firebase_messaging: ^15.2.10
-  flutter_local_notifications: ^17.2.2
-  timezone: ^0.9.4
-  google_mobile_ads: ^5.1.0
-  firebase_analytics: ^11.6.0
-  firebase_crashlytics: ^4.3.10
-  permission_handler: ^11.3.1
-  android_alarm_manager_plus: ^4.0.3
-  shared_preferences: ^2.2.2
-  cupertino_icons: ^1.0.8
+  supabase_flutter
+  provider
+  firebase_core
+  firebase_messaging
+  flutter_local_notifications
+  timezone
+  google_mobile_ads
+  firebase_analytics
+  firebase_crashlytics
+  permission_handler
+  android_alarm_manager_plus
+  shared_preferences
+  cupertino_icons
 
 dev_dependencies:
-  flutter_launcher_icons: ^0.13.1
+  flutter_launcher_icons
 
 ---
 
