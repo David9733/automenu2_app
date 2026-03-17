@@ -252,6 +252,12 @@ final shuffled = List<FoodItem>.from(allCandidates)..shuffle(random);
 
 화면 방향(세로/가로)과 화면 크기에 따라 폰트 크기, 간격, 버튼 높이, 레이아웃 구조를 분기 처리했습니다.
 
+### 🎬 시연 영상
+
+![Image](https://github.com/user-attachments/assets/21bb5885-d225-4ab9-8541-32258cfd1bc7)
+
+![Image](https://github.com/user-attachments/assets/00ecc95a-92c2-439a-a800-1b10f3d5d423)
+
 ---
 
 ## 기술 스택 및 선택 이유
