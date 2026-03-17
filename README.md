@@ -134,70 +134,7 @@ Flutter로 "이따가 뭐 먹지" 음식 추천 앱을 처음부터 완성해줘
 
 ---
 
-## pubspec.yaml 패키지
-dependencies:
-  flutter_localizations (sdk: flutter)
-  supabase_flutter
-  provider
-  firebase_core
-  firebase_messaging
-  flutter_local_notifications
-  timezone
-  google_mobile_ads
-  firebase_analytics
-  firebase_crashlytics
-  permission_handler
-  android_alarm_manager_plus
-  shared_preferences
-  cupertino_icons
 
-dev_dependencies:
-  flutter_launcher_icons
-
----
-
-## 폴더 구조
-lib/
-  config/
-    supabase_config.dart         # Supabase URL, anon key (환경변수로 분리)
-  data/
-    food_data.dart               # 로컬 fallback 데이터 (사용 안 해도 됨)
-  models/
-    meal_time.dart               # enum MealTime {breakfast, lunch, dinner}
-    eating_situation.dart        # enum EatingSituation {alone, coworkers, partner, family}
-    drinking_status.dart         # enum DrinkingStatus {yes, no, unknown}
-    food_category.dart           # enum FoodCategory {korean, japanese, western, chinese, snack}
-    food_item.dart               # FoodItem 모델 클래스
-  providers/
-    theme_provider.dart          # ThemeProvider (ChangeNotifier)
-  screens/
-    main_screen.dart             # BottomNavigationBar (추천받기 / 설정) + BannerAd 고정
-    meal_time_screen.dart        # 1단계: 식사 시간 선택
-    situation_screen.dart        # 2단계: 상황 선택
-    drinking_screen.dart         # 3단계: 음주 여부 선택
-    category_screen.dart         # 4단계: 카테고리 선택 (선택사항)
-    recommendation_screen.dart   # 5단계: 추천 결과 (PageView)
-    settings_screen.dart         # 설정 화면 (식사 시간, 알림 ON/OFF)
-  services/
-    admob_service.dart           # AdMob 광고 ID 관리
-    analytics_service.dart       # Firebase Analytics 이벤트 래퍼
-    fcm_background_handler.dart  # FCM 백그라운드 핸들러
-    food_service.dart            # Supabase 음식 추천 쿼리 + LRU 캐싱
-    notification_service.dart    # 로컬 알림 스케줄링
-    settings_service.dart        # SharedPreferences로 식사 시간/알림 설정 저장
-    shared_prefs_service.dart    # SharedPreferences 사전 로딩
-    theme_service.dart           # 테마 저장/로드
-  utils/
-    logger.dart                  # AppLogger (debug/error)
-    responsive_helper.dart       # 반응형 폰트/간격/버튼높이 헬퍼
-  widgets/
-    banner_ad_widget.dart        # 배너 광고 위젯 (하단 고정)
-    error_dialog.dart            # 에러 다이얼로그
-    interactive_button.dart      # 누를 때 scale 애니메이션 버튼
-    skeleton_loader.dart         # 스켈레톤 로딩 위젯
-  main.dart
-
----
 
 ## 화면 흐름
 MainScreen
@@ -210,43 +147,7 @@ MainScreen
 
 ---
 
-## Supabase DB 스키마
-foods 테이블:
-  - id (text, PK)
-  - name (text)
-  - image_url (text) — 이모지 또는 URL
-  - reason_text (text) — 사용 안 해도 됨 (동적 생성)
 
-food_conditions 테이블:
-  - food_id (text, FK → foods.id)
-  - meal_time (text) — breakfast / lunch / dinner
-  - eating_situation (text) — alone / coworkers / partner / family
-  - drinking_status (text) — yes / no / unknown
-  - food_category (text) — korean / japanese / western / chinese / snack
-  - priority (int)
-
----
-
-## 핵심 로직
-
-### FoodService (food_service.dart)
-- Supabase에서 food_conditions 쿼리 (meal_time, eating_situation, drinking_status, food_category 필터)
-- 결과 food_id로 foods 테이블 IN 쿼리 (1번 요청으로 최적화)
-- 매번 다른 결과를 위해 타임스탬프 기반 랜덤 시드로 셔플
-- 최대 3개 반환
-- 15분 만료 + LRU 방식 메모리 캐싱 (최대 100개 조합)
-- 음식별 상황/시간/카테고리에 맞는 동적 추천 이유 텍스트 생성
-
-### NotificationService
-- 설정된 식사 시간 1시간 전에 매일 반복 알림 스케줄
-- 아침/점심/저녁 각각 독립적으로 ON/OFF 가능
-- Android: timezone 기반 스케줄링
-
-### ThemeProvider
-- SharedPreferences에 테마 저장/로드
-- 라이트 / 다크 모드 토글
-
----
 
 ## UI 상세
 
