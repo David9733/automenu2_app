@@ -202,7 +202,16 @@ MainScreen
 
 ## 🔑 핵심 구현 내용
 
-### 1. Firebase Analytics 이벤트 추적 (AnalyticsService)
+### 1. 다크/라이트 모드 (ThemeProvider)
+
+사용자가 선택한 테마를 SharedPreferences에 저장하여 앱 재시작 후에도 유지되도록 구현했습니다.
+
+- SharedPreferences에 `'theme_mode'` 키로 `'light'` / `'dark'` / `'system'` 문자열 저장
+- Provider(ChangeNotifier) 패턴의 `ThemeProvider`로 전역 상태 관리, `toggleTheme()`으로 라이트 ↔ 다크 즉시 전환
+- 앱 시작 시 1초 타임아웃 내 저장된 테마 로딩, 실패 시 light 기본값으로 폴백
+- `Selector` 패턴으로 `themeMode` 변경 시에만 위젯 리빌드하여 불필요한 렌더링 방지
+
+### 2. Firebase Analytics 이벤트 추적 (AnalyticsService)
 
 사용자의 선택 흐름과 이탈 시점을 추적하기 위해 커스텀 이벤트를 설계하고 구현했습니다.
 
@@ -223,7 +232,7 @@ MainScreen
 | `meal_time_setting_changed` | 알림 시간 변경 (이전/이후 시간) |
 | `screen_view` | 화면 전환 추적 |
 
-### 2. 앱 초기화 구조 설계
+### 3. 앱 초기화 구조 설계
 
 서비스 우선순위에 따라 초기화 순서를 분리하여 앱 시작 속도를 확보했습니다.
 
@@ -232,7 +241,7 @@ MainScreen
 - `runZonedGuarded`로 모든 비동기 영역의 미처리 예외를 Crashlytics에 자동 보고
 - 각 초기화 단계 소요 시간을 ms 단위로 로깅하여 병목 구간 파악
 
-### 3. 반응형 레이아웃 설계 (ResponsiveHelper)
+### 4. 반응형 레이아웃 설계 (ResponsiveHelper)
 
 다양한 모바일 기기 환경에서 UI가 깨지지 않도록
 화면 방향(세로/가로)과 화면 크기에 따라 레이아웃과 UI 요소를 분기 처리
