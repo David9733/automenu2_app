@@ -202,38 +202,7 @@ MainScreen
 
 ## 🔑 핵심 구현 내용
 
-### 1. LRU 캐시 적용 (FoodService)
-
-Supabase DB 조회 결과를 메모리에 캐싱하여 동일 조건 재요청 시 DB 호출을 생략합니다.
-
-- 캐시 유효 시간: 15분
-- 최대 캐시 항목: 100개 (조건 조합 단위)
-- 캐시 키: 식사 시간·상황·음주 여부·카테고리 목록을 정렬 후 조합 → 선택 순서가 달라도 동일 키로 캐시 적중
-- 만료 항목 제거 후, 한도 초과 시 가장 오래된 항목부터 LRU 방식으로 삭제
-- 매 추천 요청마다 타임스탬프 기반 랜덤 시드를 생성하여 동일 조건에서도 다른 결과가 노출되도록 구성
-
-```dart
-// FoodService.dart
-final randomSeed = now.millisecondsSinceEpoch ^ (now.microsecondsSinceEpoch << 16);
-final random = Random(randomSeed);
-final shuffled = List<FoodItem>.from(allCandidates)..shuffle(random);
-```
-
-### 2. 동적 추천 이유 텍스트 생성 (_generateDynamicReasonText)
-
-음식 이름 · 식사 시간 · 상황 · 음주 여부 · 카테고리를 조합하여 적절한 추천 이유를 동적으로 생성합니다.
-
-- 조건 조합별 템플릿 분기 (상황 4가지 × 음주 여부 2가지 × 카테고리 5가지)
-- 음식 이름의 해시값으로 템플릿 중 하나를 선택 → 같은 음식은 항상 동일한 문구
-- 회식(동료+술) 조건에서는 혼자 먹기 좋은 음식을 필터링하는 비즈니스 로직 구성
-
-```dart
-// FoodService.dart
-final foodHash = foodName.hashCode.abs();
-return templates[foodHash % templates.length];
-```
-
-### 3. Firebase Analytics 이벤트 추적 (AnalyticsService)
+### 1. Firebase Analytics 이벤트 추적 (AnalyticsService)
 
 사용자의 선택 흐름과 이탈 시점을 추적하기 위해 커스텀 이벤트를 설계하고 구현했습니다.
 
@@ -254,7 +223,7 @@ return templates[foodHash % templates.length];
 | `meal_time_setting_changed` | 알림 시간 변경 (이전/이후 시간) |
 | `screen_view` | 화면 전환 추적 |
 
-### 4. 앱 초기화 구조 설계
+### 2. 앱 초기화 구조 설계
 
 서비스 우선순위에 따라 초기화 순서를 분리하여 앱 시작 속도를 확보했습니다.
 
@@ -263,7 +232,7 @@ return templates[foodHash % templates.length];
 - `runZonedGuarded`로 모든 비동기 영역의 미처리 예외를 Crashlytics에 자동 보고
 - 각 초기화 단계 소요 시간을 ms 단위로 로깅하여 병목 구간 파악
 
-### 5. 반응형 레이아웃 설계 (ResponsiveHelper)
+### 3. 반응형 레이아웃 설계 (ResponsiveHelper)
 
 다양한 모바일 기기 환경에서 UI가 깨지지 않도록
 화면 방향(세로/가로)과 화면 크기에 따라 레이아웃과 UI 요소를 분기 처리
@@ -317,7 +286,7 @@ return templates[foodHash % templates.length];
 
 **문제**: 같은 조건으로 추천을 다시 요청할 때마다 Supabase 쿼리가 반복 실행되었습니다.
 
-**개선**: 조건 조합을 키로 하는 메모리 캐시를 구현하고, 15분 유효 기간과 LRU 100개 한도를 설정했습니다. 캐시 적중 시 DB 호출 없이 즉시 반환합니다.
+**개선**: 조건 조합을 키로 하는 메모리 캐시를 구현하고, 15분 유효 기간과 LRU 100개 한도를 설정했습니다. 캐시 키는 카테고리 목록을 정렬 후 조합하여 선택 순서가 달라도 동일 키로 캐시가 적중되도록 했습니다. 만료 항목을 먼저 제거하고 한도 초과 시 가장 오래된 항목부터 LRU 방식으로 삭제합니다. 캐시 적중 시 DB 호출 없이 즉시 반환합니다.
 
 ### 3. 회식 조건에서 부적절한 음식 노출
 
