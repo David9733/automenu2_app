@@ -431,9 +431,6 @@ flutter pub get
 flutter run
 ```
 
-### 의존성 목록
-
-[pubspec.yaml](./pubspec.yaml)
 
 ---
 
