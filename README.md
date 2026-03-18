@@ -227,7 +227,7 @@ Flutter 앱을 화면·비즈니스 로직·데이터·공통 유틸리티 5개 
 사용자가 선택한 테마를 SharedPreferences에 저장하여 앱 재시작 후에도 유지되도록 구현했습니다.
 
 - SharedPreferences에 `'theme_mode'` 키로 `'light'` / `'dark'` / `'system'` 문자열 저장
-- Provider(ChangeNotifier) 패턴의 `ThemeProvider`로 전역 상태 관리, `toggleTheme()`으로 라이트 ↔ 다크 즉시 전환
+- Provider(ChangeNotifier) 패턴의 `ThemeProvider`로 전역 상태 관리
 - 앱 시작 시 1초 타임아웃 내 저장된 테마 로딩, 실패 시 light 기본값으로 폴백
 - `Selector` 패턴으로 `themeMode` 변경 시에만 위젯 리빌드하여 불필요한 렌더링 방지
 
