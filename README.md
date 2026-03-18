@@ -349,7 +349,9 @@ flutter pub get
 flutter run
 ```
 
-Android: `google-services.json`, iOS: `GoogleService-Info.plist`, Supabase URL, Anon Key: `lib/config/supabase_config.dart`
+Android: `google-services.json`<br>
+iOS: `GoogleService-Info.plist`<br>
+Supabase URL, Anon Key: `lib/config/supabase_config.dart`
 
 
 ---
