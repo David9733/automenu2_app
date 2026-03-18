@@ -243,10 +243,10 @@ Flutter 앱을 화면·비즈니스 로직·데이터·공통 유틸리티 5개 
 
 Flutter 크로스플랫폼 앱에서도 네이티브 앱과 동일한 반응성과 자연스러움을 목표로 직접 설계하고 구현했습니다.
 
-- 화면 전환: `PageRouteBuilder` + `FadeTransition` + `SlideTransition`(easeOutCubic) 조합으로 350~400ms 부드러운 전환, 콘텐츠 흐름에 맞는 방향(좌→우, 하→상)으로 슬라이드
-- 터치 피드백: `GestureDetector` + `ScaleTransition` + `HapticFeedback` 조합의 `InteractiveButton` 구현, 상황별 햅틱(`lightImpact` / `selectionClick` / `mediumImpact`) 구분 적용
-- 제스처: `BouncingScrollPhysics`로 iOS/Android 통일된 바운스 스크롤, 빠른 하단 스와이프(velocity > 500)로 다시 추천받기 동작
-- 애니메이션: `TweenAnimationBuilder`로 화면 진입 시 버튼 순차 등장, `AnimatedContainer`로 선택 항목 색상·인디케이터 도트 크기 즉시 전환
+- 화면 전환: `PageRouteBuilder` + `FadeTransition` + `SlideTransition`(easeOutCubic)으로 350~400ms 부드러운 전환, 방향(좌→우, 하→상) 슬라이드
+- 터치 피드백: `InteractiveButton`에 `ScaleTransition` + `HapticFeedback` 적용, 상황별 햅틱(`lightImpact` / `selectionClick` / `mediumImpact`) 구분
+- 제스처: `BouncingScrollPhysics`로 iOS/Android 바운스 스크롤 통일, 빠른 하단 스와이프(velocity > 500)로 재추천
+- 애니메이션: `TweenAnimationBuilder`로 버튼 순차 등장, `AnimatedContainer`로 선택 항목 색상·도트 크기 즉시 전환
 - 스켈레톤 로딩: shimmer 그라디언트 루프 애니메이션으로 로딩 중 레이아웃 점프 방지
 
 ### 6. Firebase Analytics 이벤트 추적
