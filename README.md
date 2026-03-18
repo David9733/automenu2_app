@@ -360,7 +360,7 @@ Supabase URL, Anon Key: `lib/config/supabase_config.dart`
 
 - [ ] Supabase 자동 일시정지 대응 자동화
 - [ ] iOS App Store 출시
-- [ ] 음식 데이터 확장 (계절·트렌드 메뉴 반영)
+- [ ] 음식 데이터 확장
 
 ---
 
