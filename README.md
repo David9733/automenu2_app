@@ -202,51 +202,7 @@ MainScreen
 
 ## 🔑 핵심 구현 내용
 
-### 1. 다크/라이트 모드 (ThemeProvider)
-
-사용자가 선택한 테마를 SharedPreferences에 저장하여 앱 재시작 후에도 유지되도록 구현했습니다.
-
-- SharedPreferences에 `'theme_mode'` 키로 `'light'` / `'dark'` / `'system'` 문자열 저장
-- Provider(ChangeNotifier) 패턴의 `ThemeProvider`로 전역 상태 관리, `toggleTheme()`으로 라이트 ↔ 다크 즉시 전환
-- 앱 시작 시 1초 타임아웃 내 저장된 테마 로딩, 실패 시 light 기본값으로 폴백
-- `Selector` 패턴으로 `themeMode` 변경 시에만 위젯 리빌드하여 불필요한 렌더링 방지
-
-### 2. 반응형 레이아웃 설계 (ResponsiveHelper)
-
-다양한 모바일 기기 환경에서 UI가 깨지지 않도록
-화면 방향(세로/가로)과 화면 크기에 따라 레이아웃과 UI 요소를 분기 처리
-
-- 화면 높이를 기준으로 height < 500 → verySmall, height < 600 → small, 그 외 → normal 3단계로 구분
-- 각 단계별로 폰트 크기, 여백, 버튼 높이를 별도 설정하여 화면 크기에 맞게 UI 조정
-- verySmall 값이 없는 경우 small 기준의 0.9배를 적용하는 폴백 로직 구현
-
-### 3. Firebase Analytics 이벤트 추적 (AnalyticsService)
-
-사용자의 선택 흐름과 이탈 시점을 파악하기 위해 단계별 커스텀 이벤트를 설계하고 구현했습니다.
-
-- 조건 선택 단계: 식사 시간 선택, 상황 선택(혼자/동료/연인/가족), 음주 여부 선택, 카테고리 선택(선택 개수·전체 선택 여부)
-- 추천 결과 단계: 추천 요청(조건 전체 포함), 추천 결과 조회(추천 개수·첫 번째 음식명), 최종 음식 선택(선택 인덱스·총 옵션 수), 다른 옵션 보기, 다시 추천받기(이전 음식명·조회한 옵션 수), 처음으로 돌아가기, 추천 실패(에러 타입·조건 포함)
-- 설정 단계: 알림 ON/OFF 변경(식사 유형·설정 시간), 알림 시간 변경(이전/이후 시간)
-- 공통: 화면 전환(`screen_view`) 추적
-
-### 4. 네이티브 앱 수준의 UX 구현
-
-Flutter 크로스플랫폼 앱에서도 네이티브 앱과 동일한 반응성과 자연스러움을 목표로 직접 설계하고 구현했습니다.
-
-- 화면 전환: `PageRouteBuilder` + `FadeTransition` + `SlideTransition`(easeOutCubic) 조합으로 350~400ms 부드러운 전환, 콘텐츠 흐름에 맞는 방향(좌→우, 하→상)으로 슬라이드
-- 터치 피드백: `GestureDetector` + `ScaleTransition` + `HapticFeedback` 조합의 `InteractiveButton` 구현, 상황별 햅틱(`lightImpact` / `selectionClick` / `mediumImpact`) 구분 적용
-- 제스처: `BouncingScrollPhysics`로 iOS/Android 통일된 바운스 스크롤, 빠른 하단 스와이프(velocity > 500)로 다시 추천받기 동작
-- 애니메이션: `TweenAnimationBuilder`로 화면 진입 시 버튼 순차 등장, `AnimatedContainer`로 선택 항목 색상·인디케이터 도트 크기 즉시 전환
-- 스켈레톤 로딩: shimmer 그라디언트 루프 애니메이션으로 로딩 중 레이아웃 점프 방지
-
-### 5. 조건 기반 음식 추천 필터링 (FoodService)
-
-- 식사 시간·상황·음주 여부·카테고리 4가지 조건을 Supabase `.eq()` 필터로 조합해 DB에서 후보를 조회
-- 카테고리는 선택된 경우에만 추가 필터링, 선택 없으면 전체 카테고리 대상
-- 회식(직장동료+음주) 조건에서는 `_isGoodForAlone()`으로 혼자 먹기 적합한 음식(라면, 반찬류 등)을 결과에서 제외
-- 매 요청마다 `현재 시각(ms XOR μs << 16)` 기반 시드로 후보 목록을 셔플하여 최대 3개 반환 → 같은 조건이어도 매번 다른 순서로 노출
-
-### 6. 레이어드 아키텍처 설계
+### 1. 레이어드 아키텍처 설계
 
 Flutter 앱을 화면·비즈니스 로직·데이터·공통 유틸리티 4개 레이어로 분리하여
 각 레이어가 단일 책임을 갖도록 설계했습니다.
@@ -256,6 +212,50 @@ Flutter 앱을 화면·비즈니스 로직·데이터·공통 유틸리티 4개 
 - **providers/** : 테마 등 앱 전역 상태를 `Provider(ChangeNotifier)` 패턴으로 관리하여 위젯 트리 어디서나 접근 가능
 - **widgets/** : `SkeletonLoader`, `ErrorDialog`, `BannerAdWidget`, `InteractiveButton` 등 재사용 UI 컴포넌트를 별도 분리하여 화면 코드 중복 제거
 - **models/** : `FoodItem`, `MealTime`, `EatingSituation` 등 도메인 모델을 별도 레이어로 정의하여 서비스·화면 양쪽에서 타입 안전하게 참조
+
+### 2. 조건 기반 음식 추천 필터링 (FoodService)
+
+- 식사 시간·상황·음주 여부·카테고리 4가지 조건을 Supabase `.eq()` 필터로 조합해 DB에서 후보를 조회
+- 카테고리는 선택된 경우에만 추가 필터링, 선택 없으면 전체 카테고리 대상
+- 회식(직장동료+음주) 조건에서는 `_isGoodForAlone()`으로 혼자 먹기 적합한 음식(라면, 반찬류 등)을 결과에서 제외
+- 매 요청마다 `현재 시각(ms XOR μs << 16)` 기반 시드로 후보 목록을 셔플하여 최대 3개 반환 → 같은 조건이어도 매번 다른 순서로 노출
+
+### 3. 다크/라이트 모드 (ThemeProvider)
+
+사용자가 선택한 테마를 SharedPreferences에 저장하여 앱 재시작 후에도 유지되도록 구현했습니다.
+
+- SharedPreferences에 `'theme_mode'` 키로 `'light'` / `'dark'` / `'system'` 문자열 저장
+- Provider(ChangeNotifier) 패턴의 `ThemeProvider`로 전역 상태 관리, `toggleTheme()`으로 라이트 ↔ 다크 즉시 전환
+- 앱 시작 시 1초 타임아웃 내 저장된 테마 로딩, 실패 시 light 기본값으로 폴백
+- `Selector` 패턴으로 `themeMode` 변경 시에만 위젯 리빌드하여 불필요한 렌더링 방지
+
+### 4. 반응형 레이아웃 설계 (ResponsiveHelper)
+
+다양한 모바일 기기 환경에서 UI가 깨지지 않도록
+화면 방향(세로/가로)과 화면 크기에 따라 레이아웃과 UI 요소를 분기 처리
+
+- 화면 높이를 기준으로 height < 500 → verySmall, height < 600 → small, 그 외 → normal 3단계로 구분
+- 각 단계별로 폰트 크기, 여백, 버튼 높이를 별도 설정하여 화면 크기에 맞게 UI 조정
+- verySmall 값이 없는 경우 small 기준의 0.9배를 적용하는 폴백 로직 구현
+
+### 5. 네이티브 앱 수준의 UX 구현
+
+Flutter 크로스플랫폼 앱에서도 네이티브 앱과 동일한 반응성과 자연스러움을 목표로 직접 설계하고 구현했습니다.
+
+- 화면 전환: `PageRouteBuilder` + `FadeTransition` + `SlideTransition`(easeOutCubic) 조합으로 350~400ms 부드러운 전환, 콘텐츠 흐름에 맞는 방향(좌→우, 하→상)으로 슬라이드
+- 터치 피드백: `GestureDetector` + `ScaleTransition` + `HapticFeedback` 조합의 `InteractiveButton` 구현, 상황별 햅틱(`lightImpact` / `selectionClick` / `mediumImpact`) 구분 적용
+- 제스처: `BouncingScrollPhysics`로 iOS/Android 통일된 바운스 스크롤, 빠른 하단 스와이프(velocity > 500)로 다시 추천받기 동작
+- 애니메이션: `TweenAnimationBuilder`로 화면 진입 시 버튼 순차 등장, `AnimatedContainer`로 선택 항목 색상·인디케이터 도트 크기 즉시 전환
+- 스켈레톤 로딩: shimmer 그라디언트 루프 애니메이션으로 로딩 중 레이아웃 점프 방지
+
+### 6. Firebase Analytics 이벤트 추적 (AnalyticsService)
+
+사용자의 선택 흐름과 이탈 시점을 파악하기 위해 단계별 커스텀 이벤트를 설계하고 구현했습니다.
+
+- 조건 선택 단계: 식사 시간 선택, 상황 선택(혼자/동료/연인/가족), 음주 여부 선택, 카테고리 선택(선택 개수·전체 선택 여부)
+- 추천 결과 단계: 추천 요청(조건 전체 포함), 추천 결과 조회(추천 개수·첫 번째 음식명), 최종 음식 선택(선택 인덱스·총 옵션 수), 다른 옵션 보기, 다시 추천받기(이전 음식명·조회한 옵션 수), 처음으로 돌아가기, 추천 실패(에러 타입·조건 포함)
+- 설정 단계: 알림 ON/OFF 변경(식사 유형·설정 시간), 알림 시간 변경(이전/이후 시간)
+- 공통: 화면 전환(`screen_view`) 추적
 
 ### 🎬 시연 영상
 
