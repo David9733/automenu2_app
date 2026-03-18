@@ -350,11 +350,11 @@ flutter run
 ```
 
 ```
-Android: `google-services.json`
-iOS: `GoogleService-Info.plist`
-`lib/config/supabase_config.dart`
-const supabaseUrl = 'YOUR_SUPABASE_URL';
-const supabaseAnonKey = 'YOUR_ANON_KEY';
+Android: google-services.json
+iOS: GoogleService-Info.plist
+lib/config/supabase_config.dart
+const supabaseUrl = YOUR_SUPABASE_URL;
+const supabaseAnonKey = YOUR_ANON_KEY;
 ```
 
 
