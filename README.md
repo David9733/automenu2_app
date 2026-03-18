@@ -207,10 +207,10 @@ MainScreen
 Flutter 앱을 화면·비즈니스 로직·데이터·공통 유틸리티 5개 레이어로 분리하여 각 레이어가 단일 책임을 갖도록 설계했습니다.
 
 - **screens/** : 단계별 화면을 독립 위젯으로 분리, 화면은 UI 렌더링과 사용자 입력 처리만 담당
-- **services/** : `FoodService`(추천 필터링·캐시), `NotificationService`(알림 스케줄링), `AnalyticsService`(이벤트 추적) 각각 단일 책임으로 하여 비즈니스 로직을 분리
+- **services/** : 추천 필터링·캐시, 알림 스케줄링, 이벤트 추적 각각 단일 책임으로 하여 비즈니스 로직을 분리
 - **providers/** : 테마 등 앱 전역 상태를 `Provider(ChangeNotifier)` 패턴으로 관리하여 위젯 트리 어디서나 접근 가능
-- **widgets/** : `SkeletonLoader`, `ErrorDialog`, `BannerAdWidget`, `InteractiveButton` 등 재사용 UI 컴포넌트를 별도 분리하여 화면 코드 중복 제거
-- **models/** : `FoodItem`, `MealTime`, `EatingSituation` 등 도메인 모델을 별도 레이어로 정의하여 서비스·화면 양쪽에서 타입 안전하게 참조
+- **widgets/** : `SkeletonLoader`, `ErrorDialog`, `BannerAdWidget`, `InteractiveButton` 등 재사용 UI 컴포넌트 분리로 화면 코드 중복 제거
+- **models/** : `FoodItem`, `MealTime`, `EatingSituation` 등 도메인 모델을 별도 레이어로 정의해 서비스·화면에서 타입 안전하게 참조
 
 ### 2. 조건 기반 음식 추천 필터링
 
